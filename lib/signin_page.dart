@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:watsapp/common_widgets/social_login_buttons.dart';
@@ -43,14 +44,27 @@ class SignInPage extends StatelessWidget {
               SocialLoginButton(
                 buttonText: "Login with Email",
                 buttonColor: Colors.purple,
-                buttonIcon: Icon(Icons.email,size: 30,color: Colors.white,),
+                buttonIcon: Icon(
+                  Icons.email,
+                  size: 30,
+                  color: Colors.white,
+                ),
                 onPressed: () {},
               ),
-              SocialLoginButton(buttonText: "Giriş"),
+              SocialLoginButton(
+                buttonText: "Guest",
+                buttonIcon: Icon(Icons.verified_user),
+                onPressed: _guestLogin,
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void _guestLogin() async{
+    AuthResult sonuc=await FirebaseAuth.instance.signInAnonymously();
+    debugPrint("UserID "+sonuc.user.uid.toString());
   }
 }

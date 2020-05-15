@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "828828870217",
+    "firebase_url": "https://flutter-watsapp.firebaseio.com",
+    "project_id": "flutter-watsapp",
+    "storage_bucket": "flutter-watsapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:828828870217:android:49e0a746c466fc3f754198",
+        "android_client_info": {
+          "package_name": "com.watsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "828828870217-n378u81ptisliql21fmjhmqeakmp97cv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.watsapp",
+            "certificate_hash": "e36a56cc7beb4174252b5b75aa3f3f29c2cfdd6d"
+          }
+        },
+        {
+          "client_id": "828828870217-i3sn23um9nrn3brlocfv5nsficurmt22.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCev5DHW0xqjek64QzzFWuLiCnTc4GjmyE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "828828870217-i3sn23um9nrn3brlocfv5nsficurmt22.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
