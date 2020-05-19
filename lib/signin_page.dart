@@ -1,9 +1,23 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:watsapp/common_widgets/social_login_buttons.dart';
+import 'package:watsapp/locator.dart';
+import 'package:watsapp/models/user_model.dart';
+import 'package:watsapp/services/auth_base.dart';
+import 'package:watsapp/services/firebase_auth_service.dart';
 
 class SignInPage extends StatelessWidget {
+  final Function(User) onSignIn;
+  AuthBase authService=locator<FirebaseAuthService>();
+
+  SignInPage({Key key,@required this.onSignIn}):super(key:key);
+
+  void _guestLogin() async{
+    var _user=await authService.signInAnonymously();
+    onSignIn(_user);
+    debugPrint("UserID "+_user.userID);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,8 +77,5 @@ class SignInPage extends StatelessWidget {
     );
   }
 
-  void _guestLogin() async{
-    AuthResult sonuc=await FirebaseAuth.instance.signInAnonymously();
-    debugPrint("UserID "+sonuc.user.uid.toString());
-  }
+
 }
