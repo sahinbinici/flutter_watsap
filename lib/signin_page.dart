@@ -1,25 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:watsapp/common_widgets/social_login_buttons.dart';
-import 'package:watsapp/locator.dart';
-import 'package:watsapp/models/user_model.dart';
-import 'package:watsapp/services/auth_base.dart';
-import 'package:watsapp/services/firebase_auth_service.dart';
+import 'package:watsapp/view_models/user_model.dart';
 
 class SignInPage extends StatelessWidget {
-  final Function(User) onSignIn;
-  AuthBase authService=locator<FirebaseAuthService>();
 
-  SignInPage({Key key,@required this.onSignIn}):super(key:key);
-
-  void _guestLogin() async{
-    var _user=await authService.signInAnonymously();
-    onSignIn(_user);
+  void _guestLogin(BuildContext context) async{
+    final userModel =Provider.of<UserModel>(context);
+    var _user=await userModel.signInAnonymously();
     debugPrint("UserID "+_user.userID);
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Flutter WatsApp"),
@@ -68,7 +63,7 @@ class SignInPage extends StatelessWidget {
               SocialLoginButton(
                 buttonText: "Guest",
                 buttonIcon: Icon(Icons.verified_user),
-                onPressed: _guestLogin,
+                onPressed: ()=>_guestLogin(context),
               ),
             ],
           ),

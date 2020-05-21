@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:watsapp/landing_page.dart';
 import 'package:watsapp/locator.dart';
-import 'package:watsapp/services/firebase_auth_service.dart';
+import 'package:watsapp/view_models/user_model.dart';
 
 void main() {
  setupLocator();
@@ -20,7 +21,9 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.purple,
       ),
-      home: LandingPage()
+      home: ChangeNotifierProvider(
+          create: (context)=>UserModel(),
+          child: LandingPage())
     );
   }
 }
