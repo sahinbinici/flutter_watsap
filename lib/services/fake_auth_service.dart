@@ -21,4 +21,28 @@ class FakeAuthService implements AuthBase{
     return Future.value(true);
   }
 
+  @override
+  Future<User> signInWithGoogle() {
+    // TODO: implement signInWithGoogle
+    return null;
+  }
+
+  @override
+  Future<User> signInWithFaceBook() {
+    // TODO: implement signInWithFaceBook
+    return null;
+  }
+
+  @override
+  Future<User> signInWithEmailAndPassword(String email, String password) {
+    // TODO: implement signInWithEmailAndPassword
+    return null;
+  }
+
+  @override
+  Future<User> createUserEmailAndPassword(String emaiil, String password) {
+    // TODO: implement createUserEmailAndPassword
+    return null;
+  }
+
 }

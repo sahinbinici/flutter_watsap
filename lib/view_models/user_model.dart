@@ -69,5 +69,45 @@ class UserModel with ChangeNotifier implements AuthBase{
     }
   }
 
+  @override
+  Future<User> signInWithGoogle() async {
+    try{
+      _state=ViewState.Busy;
+      _user= await _repository.signInWithGoogle();
+      return _user;
+    }catch(e){
+      debugPrint(e.toString());
+      return null;
+    }finally{
+      state=ViewState.Idle;
+    }
+  }
+
+  @override
+  Future<User> signInWithFaceBook() async{
+
+    try{
+      _state=ViewState.Busy;
+      _user= await _repository.signInWithFaceBook();
+      return _user;
+    }catch(e){
+      debugPrint(e.toString());
+      return null;
+    }finally{
+      state=ViewState.Idle;
+    }
+  }
+
+  @override
+  Future<User> signInWithEmailAndPassword(String email, String password) {
+
+    return null;
+  }
+
+  @override
+  Future<User> createUserEmailAndPassword(String emaiil, String password) {
+    // TODO: implement createUserEmailAndPassword
+    return null;
+  }
 
 }

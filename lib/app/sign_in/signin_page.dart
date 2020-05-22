@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:watsapp/app/sign_in/email_pass_subscribe.dart';
 import 'package:watsapp/common_widgets/social_login_buttons.dart';
 import 'package:watsapp/view_models/user_model.dart';
 
@@ -10,6 +11,27 @@ class SignInPage extends StatelessWidget {
     final userModel =Provider.of<UserModel>(context);
     var _user=await userModel.signInAnonymously();
     debugPrint("UserID "+_user.userID);
+  }
+
+  void loginWithGoogle(BuildContext context) async{
+    final userModel =Provider.of<UserModel>(context);
+    var _user=await userModel.signInWithGoogle();
+    debugPrint("UserID "+_user.userID.toString());
+  }
+
+  void loginWithFacebook(BuildContext context) async{
+    final userModel =Provider.of<UserModel>(context);
+    var _user=await userModel.signInWithFaceBook();
+    debugPrint("UserID "+_user.userID.toString());
+  }
+
+  void loginEmailandPassword(BuildContext context){
+
+    Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (context)=>EmailandPasswordLogin(),
+          fullscreenDialog: true,
+        ));
   }
 
   @override
@@ -41,14 +63,14 @@ class SignInPage extends StatelessWidget {
                 buttonText: "Login with Google",
                 textColor: Colors.black87,
                 buttonIcon: Image.asset("images/google-logo.png"),
-                onPressed: () {},
+                onPressed: ()=>loginWithGoogle(context),
               ),
               SocialLoginButton(
                 buttonIcon: Image.asset("images/facebook-logo.png"),
                 buttonText: "Facebook Login",
                 buttonColor: Color(0xFF334D92),
                 radius: 16,
-                onPressed: () {},
+                onPressed: ()=>loginWithFacebook(context),
               ),
               SocialLoginButton(
                 buttonText: "Login with Email",
@@ -58,7 +80,7 @@ class SignInPage extends StatelessWidget {
                   size: 30,
                   color: Colors.white,
                 ),
-                onPressed: () {},
+                onPressed: ()=>loginEmailandPassword(context),
               ),
               SocialLoginButton(
                 buttonText: "Guest",
@@ -71,6 +93,10 @@ class SignInPage extends StatelessWidget {
       ),
     );
   }
+
+
+
+
 
 
 }

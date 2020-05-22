@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:watsapp/landing_page.dart';
+import 'package:watsapp/app/landing_page.dart';
 import 'package:watsapp/locator.dart';
 import 'package:watsapp/view_models/user_model.dart';
 

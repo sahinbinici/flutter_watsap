@@ -39,4 +39,35 @@ class UserRepository implements AuthBase{
     }
   }
 
+  @override
+  Future<User> signInWithGoogle() async{
+    if(_appMode==AppMode.DEBUG){
+      return await _fakeAuthService.signInWithGoogle();
+    }else{
+      return await _firebaseAuthService.signInWithGoogle();
+    }
+  }
+
+  @override
+  Future<User> signInWithFaceBook() async{
+
+    if(_appMode==AppMode.DEBUG){
+      return await _fakeAuthService.signInWithFaceBook();
+    }else{
+      return await _firebaseAuthService.signInWithFaceBook();
+    }
+  }
+
+  @override
+  Future<User> signInWithEmailAndPassword(String email, String password) {
+
+    return null;
+  }
+
+  @override
+  Future<User> createUserEmailAndPassword(String emaiil, String password) {
+
+    return null;
+  }
+
 }

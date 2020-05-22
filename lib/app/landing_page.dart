@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:watsapp/home_page.dart';
-import 'package:watsapp/signin_page.dart';
+import 'package:watsapp/app/home_page.dart';
+import 'package:watsapp/app/sign_in/signin_page.dart';
 import 'package:watsapp/view_models/user_model.dart';
 
 class LandingPage extends StatelessWidget {
