@@ -12,7 +12,8 @@ class UserModel with ChangeNotifier implements AuthBase{
   ViewState _state=ViewState.Idle;
   UserRepository _repository=locator<UserRepository>();
   User _user;
-
+  String emailErrorMessage;
+  String passwordErrorMessage;
   User get user => _user;
 
   ViewState get state => _state;
@@ -76,7 +77,7 @@ class UserModel with ChangeNotifier implements AuthBase{
       _user= await _repository.signInWithGoogle();
       return _user;
     }catch(e){
-      debugPrint(e.toString());
+      debugPrint("viewdeki current user hatası :"+e.toString());
       return null;
     }finally{
       state=ViewState.Idle;
@@ -99,15 +100,51 @@ class UserModel with ChangeNotifier implements AuthBase{
   }
 
   @override
-  Future<User> signInWithEmailAndPassword(String email, String password) {
+  Future<User> signInWithEmailAndPassword(String email, String password) async{
+    try{
+      if(emailPasswordControl(email, password)){
+        _state=ViewState.Busy;
+        _user= await _repository.signInWithEmailAndPassword(email, password);
+        return _user;
+      }else
+         return null;
 
-    return null;
+    }catch(e){
+      debugPrint(e.toString());
+      return null;
+    }finally{
+      state=ViewState.Idle;
+    }
   }
 
   @override
-  Future<User> createUserEmailAndPassword(String emaiil, String password) {
-    // TODO: implement createUserEmailAndPassword
-    return null;
+  Future<User> createUserEmailAndPassword(String email, String password) async{
+    try{
+      if(emailPasswordControl(email, password)){
+        _state=ViewState.Busy;
+        _user= await _repository.createUserEmailAndPassword(email, password);
+        return _user;
+      }else return null;
+
+    }catch(e){
+      debugPrint(e.toString());
+      return null;
+    }finally{
+      state=ViewState.Idle;
+    }
+  }
+
+  bool emailPasswordControl(String email,String password){
+    var sonuc= true;
+    if(password.length<6){
+      passwordErrorMessage="Password must be at last 6 character";
+      sonuc=false;
+    }
+    if(!email.contains('@')){
+      emailErrorMessage="Email must contain @ character";
+      sonuc=false;
+    }
+    return sonuc;
   }
 
 }

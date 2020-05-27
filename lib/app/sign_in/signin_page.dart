@@ -16,7 +16,7 @@ class SignInPage extends StatelessWidget {
   void loginWithGoogle(BuildContext context) async{
     final userModel =Provider.of<UserModel>(context);
     var _user=await userModel.signInWithGoogle();
-    debugPrint("UserID "+_user.userID.toString());
+    //debugPrint("UserID "+_user.userID.toString());
   }
 
   void loginWithFacebook(BuildContext context) async{

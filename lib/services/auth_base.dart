@@ -7,5 +7,5 @@ abstract class AuthBase{
   Future<User> signInWithGoogle();
   Future<User> signInWithFaceBook();
   Future<User> signInWithEmailAndPassword(String email,String password);
-  Future<User> createUserEmailAndPassword(String emaiil,String password);
+  Future<User> createUserEmailAndPassword(String email,String password);
 }

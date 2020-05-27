@@ -65,6 +65,8 @@ class FirebaseAuthService implements AuthBase{
         );
         FirebaseUser _user=sonuc.user;
         return userFromFirebase(_user);
+      }else{
+        return null;
       }
     }
     return null;
@@ -97,14 +99,25 @@ class FirebaseAuthService implements AuthBase{
   }
 
   @override
-  Future<User> signInWithEmailAndPassword(String email, String password) {
+  Future<User> signInWithEmailAndPassword(String email, String password)async{
 
+    try{
+      AuthResult sonuc=await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+      return userFromFirebase(sonuc.user);
+    }catch(e){
+      debugPrint(e.toString());
+    }
     return null;
   }
 
   @override
-  Future<User> createUserEmailAndPassword(String emaiil, String password) {
-    // TODO: implement createUserEmailAndPassword
+  Future<User> createUserEmailAndPassword(String email, String password) async{
+    try{
+      AuthResult sonuc=await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+      return userFromFirebase(sonuc.user);
+    }catch(e){
+      debugPrint(e.toString());
+    }
     return null;
   }
 
