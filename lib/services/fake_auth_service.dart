@@ -1,4 +1,4 @@
-import 'package:watsapp/models/user_model.dart';
+import 'package:watsapp/models/user.dart';
 import 'package:watsapp/services/auth_base.dart';
 
 class FakeAuthService implements AuthBase{

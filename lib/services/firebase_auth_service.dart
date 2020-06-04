@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:watsapp/models/user_model.dart';
+import 'package:watsapp/models/user.dart';
 import 'package:watsapp/services/auth_base.dart';
 
 class FirebaseAuthService implements AuthBase{
@@ -23,7 +23,7 @@ class FirebaseAuthService implements AuthBase{
     if(firebaseUser==null){
       return null;
     }
-    return User(userID: firebaseUser.uid);
+    return User(userID: firebaseUser.uid,email: firebaseUser.email);
   }
 
   @override

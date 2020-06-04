@@ -1,8 +1,9 @@
 import 'package:watsapp/locator.dart';
-import 'package:watsapp/models/user_model.dart';
+import 'package:watsapp/models/user.dart';
 import 'package:watsapp/services/auth_base.dart';
 import 'package:watsapp/services/fake_auth_service.dart';
 import 'package:watsapp/services/firebase_auth_service.dart';
+import 'package:watsapp/services/firestoreDb_service.dart';
 
 enum AppMode{
   DEBUG,RELEASE
@@ -10,6 +11,7 @@ enum AppMode{
 class UserRepository implements AuthBase{
   FirebaseAuthService _firebaseAuthService=locator<FirebaseAuthService>();
   FakeAuthService _fakeAuthService=locator<FakeAuthService>();
+  FirestoreDBService _firestoreDBService=locator<FirestoreDBService>();
   AppMode _appMode=AppMode.RELEASE;
   @override
   Future<User> currentUser() async{
@@ -44,7 +46,13 @@ class UserRepository implements AuthBase{
     if(_appMode==AppMode.DEBUG){
       return await _fakeAuthService.signInWithGoogle();
     }else{
-      return await _firebaseAuthService.signInWithGoogle();
+      User user=await _firebaseAuthService.signInWithGoogle();
+
+      if(user!=null){
+        bool _sonuc=await _firestoreDBService.saveUser(user);
+        return user;
+      }else return null;
+
     }
   }
 
@@ -54,7 +62,11 @@ class UserRepository implements AuthBase{
     if(_appMode==AppMode.DEBUG){
       return await _fakeAuthService.signInWithFaceBook();
     }else{
-      return await _firebaseAuthService.signInWithFaceBook();
+      User user=await _firebaseAuthService.signInWithFaceBook();
+      bool _sonuc=await _firestoreDBService.saveUser(user);
+      if(_sonuc){
+        return user;
+      }else return null;
     }
   }
 
@@ -72,7 +84,12 @@ class UserRepository implements AuthBase{
     if(_appMode==AppMode.DEBUG){
       return await _fakeAuthService.createUserEmailAndPassword(email, password);
     }else{
-      return await _firebaseAuthService.createUserEmailAndPassword(email, password);
+      User user=await _firebaseAuthService.createUserEmailAndPassword(email, password);
+      bool _sonuc=await _firestoreDBService.saveUser(user);
+      if(_sonuc){
+        return user;
+      }else return null;
+
     }
   }
 

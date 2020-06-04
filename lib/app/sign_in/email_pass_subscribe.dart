@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:watsapp/common_widgets/social_login_buttons.dart';
-import 'package:watsapp/models/user_model.dart';
+import 'package:watsapp/models/user.dart';
 import 'package:watsapp/view_models/user_model.dart';
 
-import '../home_page.dart';
 
 enum FormType{
   Register,Login
@@ -25,10 +24,9 @@ class _EmailandPasswordLoginState extends State<EmailandPasswordLogin> {
     final userModel =Provider.of<UserModel>(context);
     if(_formType==FormType.Login){
       User _userLogin=await userModel.signInWithEmailAndPassword(_email, _password);
-      debugPrint("Email :"+_userLogin.userID);
     }else{
       User _userCreate=await userModel.createUserEmailAndPassword(_email, _password);
-      debugPrint("Email :"+_userCreate.userID.toString());
+
     }
 
 

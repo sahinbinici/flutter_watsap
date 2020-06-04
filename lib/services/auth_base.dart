@@ -1,4 +1,4 @@
-import 'package:watsapp/models/user_model.dart';
+import 'package:watsapp/models/user.dart';
 
 abstract class AuthBase{
   Future<User>currentUser();
