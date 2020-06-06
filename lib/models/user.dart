@@ -7,7 +7,6 @@ class User{
   String email;
   String username;
   String profilURL;
-
   DateTime createdAt;
   DateTime updatedAt;
   int seviye;
@@ -17,7 +16,7 @@ class User{
     return {
       'userID':userID,
       'email':email,
-      'username':username ?? email.substring(0,email.indexOf('@'))+randomSayiUret(),
+      'username': username,
       'proilURL':profilURL,
       'createdAt':createdAt ?? FieldValue.serverTimestamp(),
       'updatedAt':updatedAt ?? FieldValue.serverTimestamp(),

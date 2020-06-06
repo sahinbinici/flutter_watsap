@@ -19,10 +19,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_auth: ^0.15.4
+  firebase_auth: ^0.15.0
   get_it: ^1.0.3+2
   provider: ^3.1.0
-  google_sign_in: ^4.5.1
+  google_sign_in: ^4.1.1
   flutter_facebook_login: ^2.0.1
   cloud_firestore: ^0.12.10
 

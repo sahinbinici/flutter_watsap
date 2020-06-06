@@ -5,67 +5,66 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:watsapp/models/user.dart';
 import 'package:watsapp/services/auth_base.dart';
 
-class FirebaseAuthService implements AuthBase{
-  final FirebaseAuth _firebaseAuth=FirebaseAuth.instance;
+class FirebaseAuthService implements AuthBase {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   @override
-  Future<User> currentUser() async{
-    try{
-      FirebaseUser user=await _firebaseAuth.currentUser();
+  Future<User> currentUser() async {
+    try {
+      FirebaseUser user = await _firebaseAuth.currentUser();
       return userFromFirebase(user);
-    }catch(e){
+    } catch (e) {
       debugPrint(e.toString());
       return null;
     }
-
   }
 
-  User userFromFirebase(FirebaseUser firebaseUser){
-    if(firebaseUser==null){
+  User userFromFirebase(FirebaseUser firebaseUser) {
+    if (firebaseUser == null) {
       return null;
     }
-    return User(userID: firebaseUser.uid,email: firebaseUser.email);
+    return User(userID: firebaseUser.uid, email: firebaseUser.email);
   }
 
   @override
-  Future<User> signInAnonymously() async{
-   try{
-     AuthResult sonuc=await _firebaseAuth.signInAnonymously();
-     return userFromFirebase(sonuc.user);
-   }catch(e){
-    debugPrint(e.toString());
-   }
-   return null;
+  Future<User> signInAnonymously() async {
+    try {
+      AuthResult sonuc = await _firebaseAuth.signInAnonymously();
+      return userFromFirebase(sonuc.user);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return null;
   }
 
   @override
-  Future<bool> signOut() async{
-    try{
-      final _googleSignIn=GoogleSignIn();
-      final _facebookSignIn=FacebookLogin();
+  Future<bool> signOut() async {
+    try {
+      final _googleSignIn = GoogleSignIn();
+      final _facebookSignIn = FacebookLogin();
       await _facebookSignIn.logOut();
-        await _googleSignIn.signOut();
+      await _googleSignIn.signOut();
       await _firebaseAuth.signOut();
       return true;
-    }catch(e){
+    } catch (e) {
       debugPrint(e.toString());
       return false;
     }
-
   }
 
   @override
-  Future<User> signInWithGoogle() async{
-    GoogleSignIn _googleSignIn=GoogleSignIn();
-    GoogleSignInAccount _googleUser=await _googleSignIn.signIn();
-    if(_googleUser!=null){
-      GoogleSignInAuthentication _googleAuth=await _googleUser.authentication;
-      if(_googleAuth.idToken!=null && _googleAuth.accessToken!=null){
-        AuthResult sonuc=await _firebaseAuth.signInWithCredential(
-          GoogleAuthProvider.getCredential(idToken: _googleAuth.idToken, accessToken: _googleAuth.accessToken)
-        );
-        FirebaseUser _user=sonuc.user;
+  Future<User> signInWithGoogle() async {
+    GoogleSignIn _googleSignIn = GoogleSignIn();
+    GoogleSignInAccount _googleUser = await _googleSignIn.signIn();
+    if (_googleUser != null) {
+      GoogleSignInAuthentication _googleAuth = await _googleUser.authentication;
+      if (_googleAuth.idToken != null && _googleAuth.accessToken != null) {
+        AuthResult sonuc = await _firebaseAuth.signInWithCredential(
+            GoogleAuthProvider.getCredential(
+                idToken: _googleAuth.idToken,
+                accessToken: _googleAuth.accessToken));
+        FirebaseUser _user = sonuc.user;
         return userFromFirebase(_user);
-      }else{
+      } else {
         return null;
       }
     }
@@ -99,26 +98,26 @@ class FirebaseAuthService implements AuthBase{
   }
 
   @override
-  Future<User> signInWithEmailAndPassword(String email, String password)async{
-
-    try{
-      AuthResult sonuc=await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+  Future<User> signInWithEmailAndPassword(String email, String password) async {
+    try {
+      AuthResult sonuc = await _firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
       return userFromFirebase(sonuc.user);
-    }catch(e){
+    } catch (e) {
       debugPrint(e.toString());
     }
     return null;
   }
 
   @override
-  Future<User> createUserEmailAndPassword(String email, String password) async{
-    try{
-      AuthResult sonuc=await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+  Future<User> createUserEmailAndPassword(String email, String password) async {
+    try {
+      AuthResult sonuc = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
       return userFromFirebase(sonuc.user);
-    }catch(e){
+    } catch (e) {
       debugPrint(e.toString());
     }
     return null;
   }
-
 }

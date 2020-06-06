@@ -11,8 +11,9 @@ enum AppMode{
 class UserRepository implements AuthBase{
   FirebaseAuthService _firebaseAuthService=locator<FirebaseAuthService>();
   FakeAuthService _fakeAuthService=locator<FakeAuthService>();
-  FirestoreDBService _firestoreDBService=locator<FirestoreDBService>();
+  FirestoreDBService _firestoreService=locator<FirestoreDBService>();
   AppMode _appMode=AppMode.RELEASE;
+
   @override
   Future<User> currentUser() async{
     if(_appMode==AppMode.DEBUG){
@@ -49,7 +50,7 @@ class UserRepository implements AuthBase{
       User user=await _firebaseAuthService.signInWithGoogle();
 
       if(user!=null){
-        bool _sonuc=await _firestoreDBService.saveUser(user);
+        await _firestoreService.saveUser(user);
         return user;
       }else return null;
 
@@ -63,7 +64,7 @@ class UserRepository implements AuthBase{
       return await _fakeAuthService.signInWithFaceBook();
     }else{
       User user=await _firebaseAuthService.signInWithFaceBook();
-      bool _sonuc=await _firestoreDBService.saveUser(user);
+      bool _sonuc=await _firestoreService.saveUser(user);
       if(_sonuc){
         return user;
       }else return null;
@@ -85,7 +86,7 @@ class UserRepository implements AuthBase{
       return await _fakeAuthService.createUserEmailAndPassword(email, password);
     }else{
       User user=await _firebaseAuthService.createUserEmailAndPassword(email, password);
-      bool _sonuc=await _firestoreDBService.saveUser(user);
+      bool _sonuc=await _firestoreService.saveUser(user);
       if(_sonuc){
         return user;
       }else return null;
